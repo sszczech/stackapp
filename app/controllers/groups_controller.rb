@@ -5,5 +5,6 @@ class GroupsController < UserApplicationController
 
   def show
     @group = Group.find(params[:id])
+    @post = @group.posts.build
   end
 end

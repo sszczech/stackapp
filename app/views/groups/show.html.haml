@@ -1,2 +1,12 @@
 %h1= @group.name
 %h3= @group.teacher.name
+
+= form_for [@group, @post] do |f|
+  = f.text_area :content, :style => 'height: 100px; width: 400px'
+  %br
+  = f.submit 'Publikuj'
+
+.posts
+  - @group.posts.all.each do |post|
+    .post{ :id => "post-#{post.id}" }
+      = post.content

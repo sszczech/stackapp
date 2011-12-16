@@ -3,6 +3,7 @@ class Group < ActiveRecord::Base
   validates :name, :presence => true
   validates :teacher, :presence => true
 
+  has_many :posts
   has_many :user_groups, :dependent => :destroy
   has_many :users, :through => :user_groups
 
