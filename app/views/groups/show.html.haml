@@ -1,12 +1,29 @@
 %h1= @group.name
-%h3= @group.teacher.name
+%h3 Prowadzący #{@group.teacher.name}
 
-= form_for [@group, @post] do |f|
-  = f.text_area :content, :style => 'height: 100px; width: 400px'
-  %br
-  = f.submit 'Publikuj'
+.main
+  = form_for [@group, @post] do |f|
+    = f.text_area :content, :style => 'height: 100px; width: 400px'
+    %br
+    = f.submit 'Publikuj'
 
-.posts
-  - @group.posts.all.each do |post|
-    .post{ :id => "post-#{post.id}" }
-      = post.content
+  .posts
+    - @group.posts.all.each do |post|
+      .post{ :id => "post-#{post.id}" }
+        .photo
+          = image_tag post.author.photo.thumb.url if post.author.present?
+        .content
+          .author
+            = post.author.try(:name)
+          .body
+            = auto_link(post.content, :html => { :target => '_blank' })
+          .timestamps
+            = l post.created_at, :format => :short
+            = link_to 'Usuń', [@group, post], :method => :delete, :confirm => "Czy na pewno usunąć?"
+      .clear
+.sidebar
+  Zapisani użytkownicy
+  .users
+    - @group.users.all.each do |user|
+      .user{ :id => "user-#{user.id}" }
+        = image_tag user.photo.thumb.url, :width => '32px', :height => '32px', :title => user.name

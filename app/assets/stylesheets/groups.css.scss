@@ -1,3 +1,56 @@
 // Place all the styles related to the groups controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.main {
+    width: 60%;
+    float: left;
+
+    .posts {
+        .post {
+            display: block;
+            padding: 5px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border-top: 1px solid #eaeaea;
+            clear: both;
+            
+            .photo {
+                width: 60px;
+                float: left;
+            }
+
+            .content {
+                float: left;
+                width: 400px;
+
+                .author {
+                    font-size: 13px;
+                    font-weight: bold;
+                }
+
+                .body {
+                    padding: 5px;
+                }
+
+                .timestamps {
+                    text-align: right;
+                    font-size: 10px;
+                }
+            }
+        }
+    }
+}
+
+.sidebar {
+    width: 40%;
+    float: left;
+
+    .users {
+        padding: 15px;
+        .user {
+            float: left;
+            padding: 2px;
+        }
+    }
+}

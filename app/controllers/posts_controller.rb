@@ -13,6 +13,12 @@ class PostsController < UserApplicationController
     end
   end
 
+  def destroy
+    @post = @group.posts.find(params[:id])
+    @post.destroy
+    redirect_to @group
+  end
+
   private
 
   def group
