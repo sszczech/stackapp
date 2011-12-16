@@ -1,0 +1,8 @@
+%table
+  %tr
+    %td Nazwa grupy
+    %td Prowadzący
+  - @groups.each do |group|
+    %tr
+      %td= link_to group.name, group_path(group)
+      %td= group.teacher.name

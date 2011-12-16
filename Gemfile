@@ -18,7 +18,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
-
+gem 'carrierwave', '0.5.8'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

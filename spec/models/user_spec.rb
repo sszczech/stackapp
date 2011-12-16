@@ -20,6 +20,16 @@ describe User do
     end
   end
 
+  describe "#update_attribute" do
+    context "when upload photo" do
+      subject { create(:user) }
+      it {
+        photo = File.open("#{Rails.root}/test/fixtures/photo.png")
+        subject.update_attribute(:photo, photo).should be_true
+      }
+    end
+  end
+
   describe "#name" do
     context "shows first_name and last_name" do
       subject {
