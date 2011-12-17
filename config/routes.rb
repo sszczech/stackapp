@@ -2,8 +2,12 @@ Stack::Application.routes.draw do
   devise_for :users
 
   resources :groups, :only => [:index, :show], :path => 'grupy' do
-    resources :posts
+    resources :posts, :path => 'posty' do
+      resources :attachments, :path => 'pliki'
+    end
   end
+
+  resource :dashboard, :path => 'kokpit'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

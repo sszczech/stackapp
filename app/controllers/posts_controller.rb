@@ -1,6 +1,10 @@
 class PostsController < UserApplicationController
   before_filter :group
 
+  def new
+    @post = @group.posts.build
+  end
+
   def create
     @post = @group.posts.build(params[:post])
     @post.author = current_user
@@ -8,7 +12,7 @@ class PostsController < UserApplicationController
       if @post.save
         format.html { redirect_to @group }
       else
-        format.html { redirect_to @group }
+        format.html { render :action => 'new' }
       end
     end
   end

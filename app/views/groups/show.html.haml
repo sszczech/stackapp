@@ -2,11 +2,8 @@
 %h3 Prowadzący #{@group.teacher.name}
 
 .main
-  = form_for [@group, @post] do |f|
-    = f.text_area :content, :style => 'height: 100px; width: 400px'
-    %br
-    = f.submit 'Publikuj'
-
+  = form_for [@group, @post], :as => :post, :html => { :method => :post, :multipart => true } do |f|
+    = render :partial => 'posts/form', :object => f
   .posts
     - @group.posts.all.each do |post|
       .post{ :id => "post-#{post.id}" }
@@ -17,6 +14,15 @@
             = post.author.try(:name)
           .body
             = auto_link(post.content, :html => { :target => '_blank' })
+          - unless post.attachments.empty?
+            %hr
+            .attachments
+              - post.attachments.all.each do |attachment|
+                .attachment
+                  %strong= File.basename(attachment.file.current_path)
+                  = attachment.content_type
+                  = number_to_human_size attachment.size
+                  = link_to 'Pobierz', [@group, post, attachment]
           .timestamps
             = l post.created_at, :format => :short
             = link_to 'Usuń', [@group, post], :method => :delete, :confirm => "Czy na pewno usunąć?"

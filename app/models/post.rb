@@ -5,4 +5,7 @@ class Post < ActiveRecord::Base
   validates :content, :presence => true
 
   default_scope order('created_at desc')
+
+  has_many :attachments, :dependent => :destroy, :as => :attachable
+  accepts_nested_attributes_for :attachments
 end

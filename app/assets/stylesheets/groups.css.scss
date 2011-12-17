@@ -6,6 +6,13 @@
     width: 60%;
     float: left;
 
+    #attachments, .attachments {
+        .attachment {
+            padding: 2px;
+            font-size: 10px;
+        }
+    }
+
     .posts {
         .post {
             display: block;

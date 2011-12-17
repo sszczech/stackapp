@@ -1,0 +1,19 @@
+.errors
+  - form.object.errors.full_messages.each do |msg|
+    .error= msg
+
+= form.text_area :content, :style => 'height: 100px; width: 400px'
+%br
+= link_to_add_attachment "Dodaj plik" do
+  .attachment
+    = form.fields_for :attachments, Attachment.new, :child_index => 'replace_it' do |fields|
+      = fields.file_field :file
+      = link_to_function "Usuń", %{ $(this).parent().remove() }
+#attachments
+  - form.object.attachments.each do |attachment|
+    .attachment
+      = form.fields_for :attachments, attachment do |fields|
+        = fields.file_field :file
+        = fields.text_area :description
+%br
+= form.submit 'Publikuj'

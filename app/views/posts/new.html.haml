@@ -1,0 +1,9 @@
+%h1= @group.name
+%h3 Prowadzący #{@group.teacher.name}
+
+.main
+  = form_for [@group, @post], :as => :post, :html => { :method => :post, :multipart => true } do |f|
+    = render :partial => 'posts/form', :object => f
+
+.clear
+= link_to raw("&laquo; Wróć"), @group
