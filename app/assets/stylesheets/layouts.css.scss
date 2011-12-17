@@ -5,6 +5,10 @@
     font-size: 13px;
     font-family: Verdana;
 
+    a {
+        color: #0000ff;
+    }
+
     #header {
         a {
             color: #009999;
@@ -27,6 +31,10 @@ input[type="submit"] {
 
 .left {
     float: left;
+}
+
+.right {
+    float: right;
 }
 
 .clear {

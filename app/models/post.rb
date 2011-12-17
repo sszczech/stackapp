@@ -6,6 +6,7 @@ class Post < ActiveRecord::Base
 
   default_scope order('created_at desc')
 
+  has_many :comments, :dependent => :destroy, :as => :commentable
   has_many :attachments, :dependent => :destroy, :as => :attachable
   accepts_nested_attributes_for :attachments
 end

@@ -3,6 +3,7 @@ Stack::Application.routes.draw do
 
   resources :groups, :only => [:index, :show], :path => 'grupy' do
     resources :posts, :path => 'posty' do
+      resources :comments, :path => 'komentarze'
       resources :attachments, :path => 'pliki'
     end
   end

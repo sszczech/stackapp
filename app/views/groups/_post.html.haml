@@ -1,0 +1,46 @@
+.post{ :id => "post-#{post.id}" }
+  .photo
+    = image_tag post.author.photo.thumb.url if post.author.present?
+  .content
+    .author
+      = post.author.try(:name)
+    .body
+      = auto_link(post.content, :html => { :target => '_blank' })
+    - unless post.attachments.empty?
+      %hr
+      .attachments
+        - post.attachments.all.each do |attachment|
+          .attachment
+            %strong= File.basename(attachment.file.current_path)
+            = attachment.content_type
+            = number_to_human_size attachment.size
+            = link_to 'Pobierz', [@group, post, attachment]
+    .timestamps
+      = l post.created_at, :format => :short
+      - if post.author == current_user
+        = link_to 'Usuń', [@group, post], :method => :delete, :confirm => "Czy na pewno usunąć?"
+        &middot;
+      = link_to_function 'Dodaj komentarz', %{ $("#new-comment-#{post.id}").show() }
+    .comments
+      - unless post.comments.empty?
+        - post.comments.all.each do |comment|
+          .comment{ :id => "comment-#{comment.id}" }
+            .photo
+              = image_tag comment.author.photo.thumb.url, :width => '16px', :height => '16px' if comment.author.present?
+            .body
+              %strong
+                = comment.author.try(:name)
+              = auto_link(comment.content)
+              - if comment.author == current_user
+                = link_to 'Usuń', [@group, post, comment], :method => :delete, :confirm => "Czy na pewno usunąć?"
+          .clear
+      .new-comment{ :id => "new-comment-#{post.id}" }
+        = form_for [@group, post, Comment.new] do |f|
+          = f.text_area :content, :style => 'height: 32px; width: 380px'
+          %br
+          .right
+            = f.submit 'Komentuj'
+            lub
+            = link_to_function 'Anuluj', %{ $(this).parent().parent().parent().hide() }
+          .clear
+.clear

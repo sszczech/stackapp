@@ -19,7 +19,7 @@ class PostsController < UserApplicationController
 
   def destroy
     @post = @group.posts.find(params[:id])
-    @post.destroy
+    @post.destroy if @post.author == current_user
     redirect_to @group
   end
 
