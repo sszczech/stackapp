@@ -23,5 +23,11 @@
   <p><%= f.label :photo, 'Zdjęcie' %><br/>
   <%= f.file_field :photo %></p>
 
+  <% if f.object.photo.present? %>
+    <%= f.check_box :remove_photo %> Usuń zdjęcie
+    <br/>
+    <%= image_tag f.object.photo.thumb.url %>
+  <% end %>
+
   <p><%= f.submit "Aktualizuj" %></p>
 <% end %>

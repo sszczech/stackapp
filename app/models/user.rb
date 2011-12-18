@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   mount_uploader :photo, UserPhotoUploader
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :first_name, :last_name, :photo, :email, :password, :password_confirmation, :remember_me
+  attr_accessible :first_name, :last_name, :photo, :email, :password, :password_confirmation, :remember_me, :remove_photo
 
   has_many :user_groups, :dependent => :destroy
   has_many :groups, :through => :user_groups
