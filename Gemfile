@@ -40,6 +40,7 @@ group :test do
   gem 'turn', '0.8.2', :require => false
   gem 'rspec-rails', '2.7.0'
   gem 'rspec', '2.7.0'
+  gem 'capybara', '0.4.1.2'
   gem 'forgery', '0.3.12'
   gem 'factory_girl_rails', '1.2.0'
   gem 'database_cleaner', '0.6.7'
