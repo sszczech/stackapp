@@ -24,3 +24,10 @@
       - @group.teams.all.each do |team|
         .team{ :id => "team-#{team.id}" }
           = link_to team.name, group_team_path(@group, team)
+
+  - unless @group.containers.empty?
+    .containers
+      Pojemniki
+      - @group.containers.all.each do |container|
+        .container{ :id => "container-#{container.id}" }
+          = link_to container.name, [@group, container]

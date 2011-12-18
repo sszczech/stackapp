@@ -1,0 +1,8 @@
+- unless form.object.errors.empty?
+  .errors
+    - form.object.errors.full_messages.each do |msg|
+      .errors= msg
+%div
+  = form.label :name, 'Nazwa pojemnika'
+  %br
+  = form.text_field :name

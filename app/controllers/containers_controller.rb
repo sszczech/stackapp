@@ -3,11 +3,23 @@ class ContainersController < UserApplicationController
   before_filter :group
 
   def new
-    @container = @group.containers.build(params[:container])
+    @container = @group.containers.build
   end
 
   def create
-    
+    @container = @group.containers.build(params[:container])
+    @container.group = @group
+    respond_to do |format|
+      if @container.save
+        format.html { redirect_to [@group, @container] }
+      else
+        format.html { render :action => 'new' }
+      end
+    end
+  end
+
+  def show
+    @container = @group.containers.find(params[:id])
   end
 
   def destroy
