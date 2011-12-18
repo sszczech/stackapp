@@ -18,6 +18,8 @@
     .timestamps
       = l post.created_at, :format => :short
       - if post.author == current_user
+        = link_to 'Edytuj', [:edit, @group, post]
+        &middot;
         = link_to 'Usuń', [@group, post], :method => :delete, :confirm => "Czy na pewno usunąć?"
         &middot;
       = link_to_function 'Dodaj komentarz', %{ $("#new-comment-#{post.id}").show() }

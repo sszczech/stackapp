@@ -1,0 +1,8 @@
+%h1 Edytuj wpis
+
+.main
+  = form_for [@group, @post], :as => :post, :html => { :method => :put, :multipart => true } do |f|
+    = render :partial => 'posts/form', :object => f
+
+.clear
+= link_to raw("&laquo; Wróć"), @group

@@ -17,6 +17,21 @@ class PostsController < UserApplicationController
     end
   end
 
+  def edit
+    @post = @group.posts.find(params[:id])
+  end
+
+  def update
+    @post = @group.posts.find(params[:id])
+    respond_to do |format|
+      if @post.update_attributes(params[:post])
+        format.html { redirect_to group_path(@group, :anchor => "post-#{@post.id}") }
+      else
+        format.html { render :action => 'edit' }
+      end
+    end
+  end
+
   def destroy
     @post = @group.posts.find(params[:id])
     @post.destroy if @post.author == current_user
