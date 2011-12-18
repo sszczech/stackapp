@@ -1,0 +1,29 @@
+%h1= @group.name
+%h3 Nowy zespół
+
+= form_for [@group, @team] do |f|
+  - unless f.object.errors.empty?
+    .errors
+      - f.object.errors.full_messages.each do |msg|
+        .error
+          = msg
+  %div
+    = f.label :name, 'Nazwa'
+    %br
+    = f.text_field :name
+  %div
+    = f.label :description, 'Opis'
+    %br
+    = f.text_area :description, :style => 'height: 100px'
+  %div
+    = f.label :users, 'Członkowie'
+    .users
+      - @group.users.all.each do |user|
+        .user
+          = check_box_tag 'team[user_ids][]', user.id
+          = user.name
+  %div{ :style => 'margin-top: 20px' }
+    = f.submit 'Utwórz zespół'
+
+%p
+  = link_to raw("&laquo; Wróć"), @group

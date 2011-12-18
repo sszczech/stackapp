@@ -1,14 +1,24 @@
 %h1= @group.name
 %h3 Prowadzący #{@group.teacher.name}
 
+.options
+  = link_to 'Utwórz zespół', new_group_team_path(@group)
+.clear
+
 .main
   = form_for [@group, @post], :as => :post, :html => { :method => :post, :multipart => true } do |f|
     = render :partial => 'posts/form', :object => f
   .posts
     = render :partial => 'groups/post', :collection => @group.posts.all
 .sidebar
-  Zapisani użytkownicy
   .users
     - @group.users.all.each do |user|
       .user{ :id => "user-#{user.id}" }
         = image_tag user.photo.thumb.url, :width => '32px', :height => '32px', :title => user.name
+  .clear
+  - unless @group.teams.empty?
+    .teams
+      Zespoły
+      - @group.teams.all.each do |team|
+        .team{ :id => "team-#{team.id}" }
+          = link_to team.name, group_team_path(@group, team)
