@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111218114509) do
+ActiveRecord::Schema.define(:version => 20111218124020) do
 
   create_table "attachments", :force => true do |t|
     t.string   "file"
@@ -29,6 +29,14 @@ ActiveRecord::Schema.define(:version => 20111218114509) do
     t.string   "content"
     t.string   "commentable_type"
     t.integer  "commentable_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "containers", :force => true do |t|
+    t.string   "name"
+    t.integer  "group_id"
+    t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
