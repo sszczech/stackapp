@@ -7,6 +7,8 @@ class Team < ActiveRecord::Base
   has_many :team_users, :dependent => :destroy
   has_many :users, :through => :team_users
 
+  attr_accessible :name, :description, :user_ids
+
   def to_param
     [id, name.parameterize].join('-')
   end

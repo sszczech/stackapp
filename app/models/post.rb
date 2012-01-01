@@ -9,4 +9,6 @@ class Post < ActiveRecord::Base
   has_many :comments, :dependent => :destroy, :as => :commentable
   has_many :attachments, :dependent => :destroy, :as => :attachable
   accepts_nested_attributes_for :attachments
+
+  attr_accessible :content, :comments_attributes, :attachments_attributes
 end
