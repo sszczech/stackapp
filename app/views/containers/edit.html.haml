@@ -1,0 +1,6 @@
+%h1 Edytuj pojemnik
+
+= form_for [@group, @container] do |f|
+  = render :partial => 'containers/form', :object => f
+  %div
+    = f.submit 'Aktualizuj pojemnik'

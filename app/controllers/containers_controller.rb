@@ -22,6 +22,21 @@ class ContainersController < UserApplicationController
     @container = @group.containers.find(params[:id])
   end
 
+  def edit
+    @container = @group.containers.find(params[:id])
+  end
+
+  def update
+    @container = @group.containers.find(params[:id])
+    respond_to do |format|
+      if @container.update_attributes(params[:container])
+        format.html { redirect_to [@group, @container] }
+      else
+        format.html { render :action => 'edit' }
+      end
+    end
+  end
+
   def destroy
     @container = @group.containers.find(params[:id])
     @container.destroy
