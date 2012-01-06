@@ -1,2 +1,29 @@
-%h1= @container.name
+%h1 Pojemnik: #{@container.name}
 = link_to 'Edytuj', [:edit, @group, @container]
+
+#upload-form
+  = form_for Attachment.new, :as => :attachment, :url => group_container_upload_path(@group, @container), :html => { :multipart => true } do |form|
+    .attachment
+      = form.label :file, 'Wybierz plik i wyślij'
+      = form.file_field :file
+      = form.hidden_field :file_cache
+    = form.submit 'Wyślij plik'
+
+%h3 Dodane pliki
+- if @container.attachments.empty?
+  Brak plików
+%table.attachments
+  - @container.attachments.all.each do |attachment|
+    %tr.attachment
+      %td.name
+        = File.basename(attachment.file.current_path) if attachment.file.present?
+      %td.content-type
+        = attachment.content_type
+      %td.size
+        = number_to_human_size attachment.size
+      %td.timestamp
+        = l attachment.created_at, :format => :long
+      %td.links
+        = link_to 'Pobierz', [@group, @container, attachment]
+        &middot;
+        = link_to 'Usuń', [@group, @container, attachment], :method => :delete, :confirm => "Na pewno chcesz usunać?"

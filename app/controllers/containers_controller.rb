@@ -1,3 +1,4 @@
+# encoding: utf-8
 class ContainersController < UserApplicationController
 
   before_filter :group
@@ -33,6 +34,18 @@ class ContainersController < UserApplicationController
         format.html { redirect_to [@group, @container] }
       else
         format.html { render :action => 'edit' }
+      end
+    end
+  end
+
+  def upload
+    @container = @group.containers.find(params[:container_id])
+    @attachment = @container.attachments.build(params[:attachment])
+    respond_to do |format|
+      if @attachment.save
+        format.html { redirect_to [@group, @container], :notice => "Plik został zapisany na serwerze." }
+      else
+        format.html { redirect_to [@group, @container], :alert => "Błąd podczas zapisywania pliku." }
       end
     end
   end

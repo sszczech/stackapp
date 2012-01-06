@@ -4,6 +4,7 @@ class Attachment < ActiveRecord::Base
   mount_uploader :file, AttachmentUploader
 
   before_save :set_content_type_and_size
+  validates :file, :presence => true
 
   private
 
