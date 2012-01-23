@@ -41,6 +41,7 @@ class ContainersController < UserApplicationController
   def upload
     @container = @group.containers.find(params[:container_id])
     @attachment = @container.attachments.build(params[:attachment])
+    @attachment.author = current_user
     respond_to do |format|
       if @attachment.save
         format.html { redirect_to [@group, @container], :notice => "Plik został zapisany na serwerze." }
