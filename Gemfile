@@ -2,6 +2,8 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.1.3'
 gem 'thin'
+gem "hiredis", "~> 0.3.1"
+gem "redis", "~> 2.2.2"
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
@@ -23,6 +25,8 @@ gem 'rmagick', '2.13.1'
 gem 'mime-types', '1.17.2'
 gem 'carrierwave', '0.5.8'
 gem "rails_autolink", "~> 1.0.4"
+gem 'kaminari', '0.12.4'
+
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

@@ -9,13 +9,14 @@
     #page
       #header
         #links
-          = link_to 'Strona główna', root_path
           - if user_signed_in?
+            = link_to 'Kokpit', dashboard_path
             &middot;
             = link_to 'Edytuj', edit_user_registration_path
             &middot;
             = link_to 'Wyloguj', destroy_user_session_path
           - else
+            = link_to 'Strona główna', root_path
             &middot;
             = link_to 'Zaloguj się', new_user_session_path
             &middot;

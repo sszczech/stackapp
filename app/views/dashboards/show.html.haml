@@ -1,2 +1,9 @@
-- current_user.groups.all.each do |group|
-  = link_to group.name, group
+%h1
+  #{image_tag current_user.photo.thumb.url, :width => '32px', :height => '32px'}
+  #{current_user.name}
+
+.main{ :style => 'width: 480px'}
+  .groups
+    - current_user.groups.all.each do |group|
+      .group
+        = link_to "#{group.name} (#{group.posts.count})", group
