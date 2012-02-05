@@ -7,3 +7,14 @@
 .description {
     margin-top: 20px;
 }
+
+#login-box {
+    label {
+        font-size: 14px;
+    }
+
+    input[type="text"], input[type="password"], input[type="email"] {
+        font-size: 16px;
+        padding: 5px;
+    }
+}
