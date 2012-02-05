@@ -16,7 +16,8 @@
   .users
     - @group.users.all.each do |user|
       .user{ :id => "user-#{user.id}" }
-        = image_tag user.photo.thumb.url, :width => '32px', :height => '32px', :title => user.name
+        = link_to user do
+          = image_tag user.photo.thumb.url, :width => '32px', :height => '32px', :title => user.name
   .clear
   - unless @group.teams.empty?
     .teams

@@ -1,6 +1,7 @@
 Stack::Application.routes.draw do
   devise_for :users
 
+  resources :users, :only => [:show], :path => 'uzytkownicy'
   resources :groups, :only => [:index, :show], :path => 'grupy' do
     resources :containers, :path => 'pojemniki', :path_names => { :new => 'nowy', :edit => 'edytuj' } do
       post :upload

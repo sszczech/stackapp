@@ -21,7 +21,8 @@
         = File.basename(attachment.file.current_path) if attachment.file.present?
         - if attachment.author
           %br
-          %small= "(dodane przez #{attachment.author.name})"
+          %small
+            (dodane przez #{link_to attachment.author.name, attachment.author})
       %td.content-type
         = attachment.content_type
       %td.size

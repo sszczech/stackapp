@@ -12,5 +12,6 @@
   .users
     - @team.users.each do |user|
       .user
-        = image_tag user.photo.thumb.url, :title => user.name
+        = link_to user do
+          = image_tag user.photo.thumb.url, :title => user.name
   .clear

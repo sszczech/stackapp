@@ -24,6 +24,10 @@ class User < ActiveRecord::Base
     update_attributes(params)
   end
 
+  def to_param
+    "#{id} #{name}".parameterize
+  end
+
   def name
     "#{first_name} #{last_name}"
   end

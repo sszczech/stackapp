@@ -1,0 +1,8 @@
+%h1
+  #{image_tag @user.photo.thumb.url}
+  #{@user.name}
+
+#groups
+  - @user.groups.all.each do |group|
+    .group
+      = link_to group.name, group

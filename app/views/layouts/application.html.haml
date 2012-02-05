@@ -12,6 +12,8 @@
           - if user_signed_in?
             = link_to 'Kokpit', dashboard_path
             &middot;
+            = link_to 'Mój profil', current_user
+            &middot;
             = link_to 'Edytuj', edit_user_registration_path
             &middot;
             = link_to 'Wyloguj', destroy_user_session_path

@@ -1,9 +1,10 @@
 .post{ :id => "post-#{post.id}" }
   .photo
-    = image_tag post.author.photo.thumb.url if post.author.present?
+    = link_to post.author do
+      = image_tag post.author.photo.thumb.url if post.author.present?
   .content
     .author
-      = post.author.try(:name)
+      = link_to post.author.try(:name), post.author
     .body
       = auto_link(post.content, :html => { :target => '_blank' })
     - unless post.attachments.empty?
@@ -29,10 +30,12 @@
         - post.comments.all.each do |comment|
           .comment{ :id => "comment-#{comment.id}" }
             .photo
-              = image_tag comment.author.photo.thumb.url, :width => '16px', :height => '16px' if comment.author.present?
+              - if comment.author.present?
+                = link_to comment.author do
+                  = image_tag comment.author.photo.thumb.url, :width => '16px', :height => '16px'
             .body
               %strong
-                = comment.author.try(:name)
+                = link_to comment.author.try(:name), comment.author
               = auto_link(comment.content)
               - if comment.author == current_user
                 = link_to 'Usuń', [@group, post, comment], :method => :delete, :confirm => "Czy na pewno usunąć?"
