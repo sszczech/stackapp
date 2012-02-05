@@ -1,10 +1,9 @@
-%h1= @group.name
-%h3 Nowy zespół
+%h1 Edytuj zespół #{@group.name}
 
 = form_for [@group, @team] do |f|
   = render :partial => "teams/form", :locals => { :f => f }
   %div{ :style => 'margin-top: 20px' }
-    = f.submit 'Utwórz zespół'
+    = f.submit 'Aktualizuj zespół'
 
 %p
   = link_to raw("&laquo; Wróć"), @group

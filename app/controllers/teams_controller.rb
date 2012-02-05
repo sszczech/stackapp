@@ -22,6 +22,21 @@ class TeamsController < ApplicationController
     end
   end
 
+  def edit
+    @team = @group.teams.find(params[:id])
+  end
+
+  def update
+    @team = @group.teams.find(params[:id])
+    respond_to do |format|
+      if @team.update_attributes(params[:team])
+        format.html { redirect_to [@group, @team] }
+      else
+        format.html { render :action => 'edit' }
+      end
+    end
+  end
+
   def destroy
     @team = @group.teams.find(params[:id])
     @team.destroy
