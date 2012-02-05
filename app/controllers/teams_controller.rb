@@ -8,6 +8,7 @@ class TeamsController < ApplicationController
 
   def show
     @team = @group.teams.find(params[:id])
+    @post = Post.new
   end
 
   def create

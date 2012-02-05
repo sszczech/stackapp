@@ -21,8 +21,9 @@
         = link_to 'Edytuj', [:edit, @group, post]
         &middot;
         = link_to 'Usuń', [@group, post], :method => :delete, :confirm => "Czy na pewno usunąć?"
+      - unless !local_assigns[:comment]
         &middot;
-      = link_to_function 'Dodaj komentarz', %{ $("#new-comment-#{post.id}").show() }
+        = link_to_function 'Dodaj komentarz', %{ $("#new-comment-#{post.id}").show() }
     .comments
       - unless post.comments.empty?
         - post.comments.all.each do |comment|

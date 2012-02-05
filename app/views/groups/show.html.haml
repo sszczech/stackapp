@@ -11,7 +11,7 @@
   = form_for [@group, @post], :as => :post, :html => { :method => :post, :multipart => true } do |f|
     = render :partial => 'posts/form', :object => f
   .posts
-    = render :partial => 'groups/post', :collection => @group.posts.all
+    = render :partial => 'groups/post', :collection => @group.posts.all, :locals => { :comment => true }
 .sidebar
   .users
     - @group.users.all.each do |user|

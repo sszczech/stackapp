@@ -1,3 +1,16 @@
-%h1= @team.name
-%h4= @team.description
-= link_to 'Edytuj', [:edit, @group, @team]
+%h1 #{link_to @group.name, @group} &raquo; #{@team.name}
+
+.main
+  = form_for [@group, @team, @post], :as => :post, :html => { :method => :post, :multipart => true } do |f|
+    = render :partial => 'posts/form', :object => f
+  .posts
+    = render :partial => 'groups/post', :collection => @team.posts.all, :locals => { :comment => false }
+.sidebar
+  = link_to 'Edytuj zespół', [:edit, @group, @team]
+  .description
+    = @team.description
+  .users
+    - @team.users.each do |user|
+      .user
+        = image_tag user.photo.thumb.url, :title => user.name
+  .clear

@@ -1,16 +1,26 @@
 class PostsController < UserApplicationController
   before_filter :group
+  before_filter :team
 
   def new
     @post = @group.posts.build
   end
 
   def create
-    @post = @group.posts.build(params[:post])
+    if @team
+      @post = @team.posts.build(params[:post])
+      @post.group = @group
+    else
+      @post = @group.posts.build(params[:post])
+    end
     @post.author = current_user
     respond_to do |format|
       if @post.save
-        format.html { redirect_to @group }
+        if @team
+          format.html { redirect_to [@group, @team] }
+        else
+          format.html { redirect_to @group }
+        end
       else
         format.html { render :action => 'new' }
       end
@@ -18,14 +28,18 @@ class PostsController < UserApplicationController
   end
 
   def edit
-    @post = @group.posts.find(params[:id])
+    @post = Post.find(params[:id])
   end
 
   def update
-    @post = @group.posts.find(params[:id])
+    @post = Post.find(params[:id])
     respond_to do |format|
       if @post.update_attributes(params[:post])
-        format.html { redirect_to group_path(@group, :anchor => "post-#{@post.id}") }
+        if @post.postable.is_a?(Team)
+          format.html { redirect_to group_team_path(@group, @post.postable, :anchor => "post-#{@post.id}") }
+        else
+          format.html { redirect_to group_path(@group, :anchor => "post-#{@post.id}") }
+        end
       else
         format.html { render :action => 'edit' }
       end
@@ -33,14 +47,22 @@ class PostsController < UserApplicationController
   end
 
   def destroy
-    @post = @group.posts.find(params[:id])
+    @post = Post.find(params[:id])
     @post.destroy if @post.author == current_user
-    redirect_to @group
+    if @post.postable.is_a?(Team)
+      redirect_to [@group, @post.postable]
+    else
+      redirect_to @group
+    end
   end
 
   private
 
   def group
     @group ||= Group.find(params[:group_id])
+  end
+
+  def team
+    @team ||= @group.teams.find(params[:team_id]) if params.has_key?(:team_id)
   end
 end
