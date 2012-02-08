@@ -1,9 +1,6 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.1.3'
-gem 'thin'
-gem "hiredis", "~> 0.3.1"
-gem "redis", "~> 2.2.2"
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
@@ -39,6 +36,10 @@ gem 'kaminari', '0.12.4'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
+
+group :development do
+  gem 'thin'
+end
 
 group :test do
   # Pretty printed test output
