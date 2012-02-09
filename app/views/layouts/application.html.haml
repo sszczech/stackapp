@@ -6,6 +6,11 @@
     = javascript_include_tag "application"
     = csrf_meta_tags
   %body
+    #flash
+      - if flash[:notice]
+        .notice= flash[:notice]
+      - else
+        .alert= flash[:alert]
     #page
       #header
         #links

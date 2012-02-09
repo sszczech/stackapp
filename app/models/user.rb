@@ -12,10 +12,6 @@ class User < ActiveRecord::Base
   has_many :user_groups, :dependent => :destroy
   has_many :groups, :through => :user_groups
 
-  def activities
-    Stream.find(id)
-  end
-
   def update_with_password(params={})
     if params[:password].blank?
       params.delete(:password)

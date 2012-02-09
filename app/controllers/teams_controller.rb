@@ -1,4 +1,4 @@
-class TeamsController < ApplicationController
+class TeamsController < UserApplicationController
 
   before_filter :group
 
@@ -47,6 +47,6 @@ class TeamsController < ApplicationController
   private
 
   def group
-    @group ||= Group.find(params[:group_id])
+    @group ||= current_user.groups.find(params[:group_id])
   end
 end

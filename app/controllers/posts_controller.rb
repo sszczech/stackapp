@@ -1,6 +1,8 @@
 class PostsController < UserApplicationController
   before_filter :group
   before_filter :team
+  before_filter :post, :only => [:edit, :update, :destroy]
+  before_filter :author?, :only => [:edit, :update, :destroy]
 
   def new
     @post = @group.posts.build
@@ -8,6 +10,10 @@ class PostsController < UserApplicationController
 
   def create
     if @team
+      unless @team.users.include?(current_user)
+        forbidden
+        return
+      end
       @post = @team.posts.build(params[:post])
       @post.group = @group
     else
@@ -28,11 +34,9 @@ class PostsController < UserApplicationController
   end
 
   def edit
-    @post = Post.find(params[:id])
   end
 
   def update
-    @post = Post.find(params[:id])
     respond_to do |format|
       if @post.update_attributes(params[:post])
         if @post.postable.is_a?(Team)
@@ -47,8 +51,7 @@ class PostsController < UserApplicationController
   end
 
   def destroy
-    @post = Post.find(params[:id])
-    @post.destroy if @post.author == current_user
+    @post.destroy
     if @post.postable.is_a?(Team)
       redirect_to [@group, @post.postable]
     else
@@ -59,10 +62,22 @@ class PostsController < UserApplicationController
   private
 
   def group
-    @group ||= Group.find(params[:group_id])
+    @group ||= current_user.groups.find(params[:group_id])
   end
 
   def team
     @team ||= @group.teams.find(params[:team_id]) if params.has_key?(:team_id)
+  end
+
+  def post
+    @post ||= Post.find(params[:id])
+  end
+
+  def author?
+    unless post.author == current_user
+      forbidden
+      return false
+    end
+    true
   end
 end
