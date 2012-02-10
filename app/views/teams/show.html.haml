@@ -6,7 +6,10 @@
   .posts
     = render :partial => 'groups/post', :collection => @team.posts.all, :locals => { :comment => false }
 .sidebar
-  = link_to 'Edytuj zespół', [:edit, @group, @team]
+  - if current_user == @group.teacher
+    = link_to 'Edytuj zespół', [:edit, @group, @team]
+    &middot;
+    = link_to 'Usuń zespół', [@group, @team], :method => :delete, :confirm => 'Czy na pewno chcesz usunąć zespół?'
   .description
     = @team.description
   .users

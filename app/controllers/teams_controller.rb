@@ -1,21 +1,29 @@
 class TeamsController < UserApplicationController
 
   before_filter :group
+  before_filter :team, :only => [:show, :edit, :update, :destroy]
 
   def new
     @team = Team.new
+    forbidden unless @group.teacher == current_user
   end
 
   def show
-    @team = @group.teams.find(params[:id])
     @post = Post.new
+    respond_to do |format|
+      if @group.teacher == current_user || @team.users.include?(current_user)
+        format.html
+      else
+        format.html { forbidden }
+      end
+    end
   end
 
   def create
     @team = @group.teams.build(params[:team])
     @team.group = @group
     respond_to do |format|
-      if @team.save
+      if @group.teacher == current_user && @team.save
         format.html { redirect_to [@group, @team] }
       else
         format.html { render :action => 'new' }
@@ -24,13 +32,11 @@ class TeamsController < UserApplicationController
   end
 
   def edit
-    @team = @group.teams.find(params[:id])
   end
 
   def update
-    @team = @group.teams.find(params[:id])
     respond_to do |format|
-      if @team.update_attributes(params[:team])
+      if @group.teacher == current_user && @team.update_attributes(params[:team])
         format.html { redirect_to [@group, @team] }
       else
         format.html { render :action => 'edit' }
@@ -39,8 +45,7 @@ class TeamsController < UserApplicationController
   end
 
   def destroy
-    @team = @group.teams.find(params[:id])
-    @team.destroy
+    @team.destroy if @group.teacher == current_user
     redirect_to @group
   end
 
@@ -48,5 +53,9 @@ class TeamsController < UserApplicationController
 
   def group
     @group ||= current_user.groups.find(params[:group_id])
+  end
+
+  def team
+    @team ||= @group.teams.find(params[:id])
   end
 end
