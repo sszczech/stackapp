@@ -30,5 +30,8 @@
     .containers
       Pojemniki
       - @group.containers.all.each do |container|
-        .container{ :id => "container-#{container.id}" }
-          = link_to container.name, [@group, container]
+        - if container.has_access?(current_user)
+          .container{ :id => "container-#{container.id}" }
+            = link_to container.name, [@group, container]
+            - if container.private?
+              (prywatny)

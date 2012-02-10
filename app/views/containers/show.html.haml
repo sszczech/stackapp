@@ -1,7 +1,10 @@
 %h1 #{link_to @group.name, @group} &raquo; Pojemnik: #{@container.name}
-= link_to 'Edytuj', [:edit, @group, @container]
-&middot;
-= link_to 'Usuń', [@group, @container], :method => :delete, :confirm => 'Na pewno chcesz usunąć?'
+- if @group.teacher == current_user
+  = link_to 'Edytuj', [:edit, @group, @container]
+  &middot;
+  = link_to 'Usuń', [@group, @container], :method => :delete, :confirm => 'Na pewno chcesz usunąć?'
+
+%h2 #{@container.owner.try(:name)}
 
 #upload-form
   = form_for Attachment.new, :as => :attachment, :url => group_container_upload_path(@group, @container), :html => { :multipart => true } do |form|

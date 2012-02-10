@@ -2,6 +2,7 @@
 class ContainersController < UserApplicationController
 
   before_filter :group
+  before_filter :container, :only => [:show, :edit, :update, :destroy]
 
   def new
     @container = @group.containers.build
@@ -10,6 +11,7 @@ class ContainersController < UserApplicationController
   def create
     @container = @group.containers.build(params[:container])
     @container.group = @group
+    @container.owner = current_user
     respond_to do |format|
       if @container.save
         format.html { redirect_to [@group, @container] }
@@ -20,15 +22,20 @@ class ContainersController < UserApplicationController
   end
 
   def show
-    @container = @group.containers.find(params[:id])
   end
 
   def edit
-    @container = @group.containers.find(params[:id])
+    unless @group.teacher == current_user
+      forbidden
+      return
+    end
   end
 
   def update
-    @container = @group.containers.find(params[:id])
+    unless @group.teacher == current_user
+      forbidden
+      return
+    end
     respond_to do |format|
       if @container.update_attributes(params[:container])
         format.html { redirect_to [@group, @container] }
@@ -40,6 +47,10 @@ class ContainersController < UserApplicationController
 
   def upload
     @container = @group.containers.find(params[:container_id])
+    unless @container.has_access?(current_user)
+      forbidden
+      return
+    end
     @attachment = @container.attachments.build(params[:attachment])
     @attachment.author = current_user
     respond_to do |format|
@@ -52,7 +63,10 @@ class ContainersController < UserApplicationController
   end
 
   def destroy
-    @container = @group.containers.find(params[:id])
+    unless @group.teacher == current_user
+      forbidden
+      return
+    end
     @container.destroy
     redirect_to @group
   end
@@ -60,6 +74,10 @@ class ContainersController < UserApplicationController
   private
 
   def group
-    @group ||= Group.find(params[:group_id])
+    @group ||= current_user.groups.find(params[:group_id])
+  end
+
+  def container
+    @container ||= @group.containers.find(params[:id])
   end
 end

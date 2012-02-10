@@ -6,3 +6,13 @@
   = form.label :name, 'Nazwa pojemnika'
   %br
   = form.text_field :name
+%div
+  = form.label :access, 'Dostęp'
+  %br
+  = form.radio_button :access, 'public', :checked => true
+  Publiczny (wszyscy mogą dodawać)
+  %br
+  = form.radio_button :access, 'private'
+  Prywatny (właściciel i prowadzący mogą dodawać)
+  %p
+    Wyedytować lub usunąć pojemnik może tylko prowadzący grupę.

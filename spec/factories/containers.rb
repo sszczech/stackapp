@@ -5,5 +5,6 @@ FactoryGirl.define do
     name { Forgery(:lorem_ipsum).sentences }
     association :owner, :factory => :user
     association :group
+    access 'public'
   end
 end
